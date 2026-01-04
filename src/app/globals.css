@@ -1,71 +1,73 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: var(--font-space-grotesk), sans-serif;
+    --font-sans: var(--font-inter), sans-serif;
+    --font-display: var(--font-poppins), sans-serif;
 
-  --color-primary: #8A2BE2;
-  --color-secondary: #00BFFF;
-  --color-background-light: #f6f6f8;
-  --color-background-dark: #101622;
-
-  --color-fresh-sky-50: oklch(96.34% 0.013 226.56);
-  --color-fresh-sky-100: oklch(92.72% 0.028 229.17);
-  --color-fresh-sky-200: oklch(85.52% 0.055 229.82);
-  --color-fresh-sky-300: oklch(78.50% 0.080 230.41);
-  --color-fresh-sky-400: oklch(71.72% 0.104 232.27);
-  --color-fresh-sky-500: oklch(65.35% 0.124 235.43);
-  --color-fresh-sky-600: oklch(55.56% 0.104 235.08);
-  --color-fresh-sky-700: oklch(45.33% 0.082 234.54);
-  --color-fresh-sky-800: oklch(34.51% 0.061 234.45);
-  --color-fresh-sky-900: oklch(22.74% 0.035 232.96);
-  --color-fresh-sky-950: oklch(18.97% 0.026 228.10);
-
-  --color-hyper-magenta-50: oklch(94.42% 0.033 308.97);
-  --color-hyper-magenta-100: oklch(88.78% 0.069 309.85);
-  --color-hyper-magenta-200: oklch(78.01% 0.138 308.94);
-  --color-hyper-magenta-300: oklch(67.77% 0.205 306.99);
-  --color-hyper-magenta-400: oklch(59.26% 0.258 304.29);
-  --color-hyper-magenta-500: oklch(53.51% 0.282 299.38);
-  --color-hyper-magenta-600: oklch(45.42% 0.238 299.74);
-  --color-hyper-magenta-700: oklch(36.96% 0.191 300.31);
-  --color-hyper-magenta-800: oklch(28.15% 0.141 302.10);
-  --color-hyper-magenta-900: oklch(18.41% 0.089 304.76);
-  --color-hyper-magenta-950: oklch(15.27% 0.069 305.68);
-
-  --color-sky-reflection-50: oklch(96.06% 0.011 243.65);
-  --color-sky-reflection-100: oklch(92.03% 0.023 241.89);
-  --color-sky-reflection-200: oklch(84.23% 0.046 240.25);
-  --color-sky-reflection-300: oklch(76.25% 0.069 241.37);
-  --color-sky-reflection-400: oklch(68.31% 0.093 242.80);
-  --color-sky-reflection-500: oklch(60.56% 0.115 244.83);
-  --color-sky-reflection-600: oklch(51.64% 0.096 244.44);
-  --color-sky-reflection-700: oklch(42.33% 0.075 243.81);
-  --color-sky-reflection-800: oklch(32.48% 0.055 243.09);
-  --color-sky-reflection-900: oklch(21.51% 0.032 244.14);
-  --color-sky-reflection-950: oklch(18.13% 0.022 243.49);
+    --color-primary: #8A2BE2;
+    --color-secondary: #00BFFF;
+    --color-background-light: #f6f6f8;
+    --color-background-dark: #101622;
 }
 
 :root {
-  --primary: #8A2BE2;
-  --secondary: #00BFFF;
-  --background-light: #f6f6f8;
-  --background-dark: #101622;
+    --primary: #8A2BE2;
+    --secondary: #00BFFF;
+    --background-light: #f6f6f8;
+    --background-dark: #101622;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 @layer base {
-  body {
-    @apply bg-background-dark text-white font-display;
-  }
+    body {
+        @apply bg-background-dark text-white font-sans leading-relaxed;
+        font-size: 16px;
+    }
+
+    h1 {
+        @apply font-display font-bold leading-none tracking-tight;
+    }
+
+    h2 {
+        @apply font-display font-bold leading-tight tracking-tight;
+    }
+
+    h3 {
+        @apply font-display font-bold leading-tight;
+    }
+
+    p {
+        @apply leading-relaxed;
+    }
 }
 
 .glow-effect {
-  box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 0 0 40px rgba(138, 43, 226, 0.4), 0 0 60px rgba(138, 43, 226, 0.2);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.6), 0 0 40px rgba(138, 43, 226, 0.4), 0 0 60px rgba(138, 43, 226, 0.2);
 }
 
 .glow-effect-secondary {
-  box-shadow: 0 0 20px rgba(0, 191, 255, 0.6), 0 0 40px rgba(0, 191, 255, 0.4), 0 0 60px rgba(0, 191, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 191, 255, 0.6), 0 0 40px rgba(0, 191, 255, 0.4), 0 0 60px rgba(0, 191, 255, 0.2);
+}
+
+/* Gradient animation for Hero title */
+@keyframes gradient {
+
+    0%,
+    100% {
+        background-size: 200% 200%;
+        background-position: left center;
+    }
+
+    50% {
+        background-size: 200% 200%;
+        background-position: right center;
+    }
+}
+
+.animate-gradient {
+    animation: gradient 8s ease infinite;
+    background-size: 200% 200%;
 }

@@ -3,34 +3,27 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { FaXTwitter } from 'react-icons/fa6';
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 
 export function Contact() {
-    const formRef = useRef<HTMLFormElement>(null);
+    const formRef = useRef(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+    const [submitStatus, setSubmitStatus] = useState('idle');
 
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
         setSubmitStatus('idle');
-
-        console.log({
-            service: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-            template: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-            publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY,
-        });
 
         try {
             const result = await emailjs.sendForm(
                 `${process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID}`,
                 `${process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID}`,
-                formRef.current!,
+                formRef.current,
                 `${process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY}`
             );
 
-            console.log('Email sent successfully:', result.text);
             setSubmitStatus('success');
             formRef.current?.reset();
 
@@ -174,6 +167,10 @@ export function Contact() {
                                     <span className="material-symbols-outlined mr-4 text-primary">call</span>
                                     <a className="hover:text-white transition-colors duration-300" href="tel:+8801918389189">+880 1918-389-189</a>
                                 </li>
+                                <li className="flex items-center">
+                                    <span className="material-symbols-outlined mr-4 text-primary">chat</span>
+                                    <a className="hover:text-white transition-colors duration-300" href="https://wa.me/8801918389189" target="_blank">+880 1918-389-189 (WhatsApp)</a>
+                                </li>
                             </ul>
                         </div>
                         <div className="bg-gray-900/50 backdrop-blur-xl p-8 rounded-xl shadow-2xl border border-white/10">
@@ -195,7 +192,7 @@ export function Contact() {
                                 </a>
                                 <a className="text-gray-400 hover:text-white transition-transform duration-300 hover:-translate-y-1 flex items-center"
                                     target='_blank'
-                                    href="https://x.com/home">
+                                    href="https://x.com/AbdulHasib95581">
                                     <FaXTwitter size={25}></FaXTwitter>
                                 </a>
                             </div>

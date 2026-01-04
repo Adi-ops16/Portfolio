@@ -1,13 +1,5 @@
-import { HTMLMotionProps, motion } from 'framer-motion';
-import { ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import { twMerge } from 'tailwind-merge';
-
-interface ButtonProps extends HTMLMotionProps<"button"> {
-    children: ReactNode;
-    variant?: 'primary' | 'secondary' | 'outline';
-    className?: string;
-    glow?: boolean;
-}
 
 export function Button({
     children,
@@ -15,7 +7,7 @@ export function Button({
     className,
     glow = false,
     ...props
-}: ButtonProps) {
+}) {
     const baseStyles = "flex items-center justify-center overflow-hidden rounded-full h-12 px-8 text-base font-bold leading-normal tracking-[0.015em] transition-all focus:outline-none focus:ring-4";
 
     const variants = {

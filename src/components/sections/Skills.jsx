@@ -9,11 +9,11 @@ const skills = [
     { name: "Tailwind CSS", proficiency: 90, category: "Frontend" },
     { name: "JavaScript", proficiency: 85, category: "Frontend" },
     { name: "React", proficiency: 80, category: "Frontend" },
-    { name: "Next.js", proficiency: 30, category: "Frontend" },
-    { name: "DaisyUI", proficiency: 70, category: "Frontend" },
-    { name: "Node.js", proficiency: 80, category: "Backend" },
+    { name: "Next.js", proficiency: 50, category: "Frontend" },
+    { name: "DaisyUI", proficiency: 90, category: "Frontend" },
+    { name: "Node.js", proficiency: 70, category: "Backend" },
     { name: "Express.js", proficiency: 80, category: "Backend" },
-    { name: "MongoDB", proficiency: 60, category: "Backend" },
+    { name: "MongoDB", proficiency: 80, category: "Backend" },
     { name: "Git", proficiency: 70, category: "Tools" },
     { name: "GitHub", proficiency: 70, category: "Tools" },
 ];
@@ -24,7 +24,7 @@ export function Skills() {
     const toolSkills = skills.filter(s => s.category === "Tools");
 
     return (
-        <section id="skills" className="relative w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24 bg-background-light dark:bg-background-dark overflow-hidden">
+        <section id="skills" className="relative w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24 overflow-hidden">
             {/* Background Elements */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent"></div>
@@ -75,7 +75,7 @@ export function Skills() {
     );
 }
 
-function SkillCard({ skill, index }: { skill: { name: string; proficiency: number }; index: number }) {
+function SkillCard({ skill, index }) {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 

@@ -9,7 +9,7 @@ export function About() {
     return (
         <section
             id="about"
-            className="relative flex mt-5 w-full min-h-screen items-center justify-center px-4 sm:px-6 md:px-8 py-16 bg-background-light dark:bg-background-dark"
+            className="relative flex mt-5 w-full min-h-screen items-center justify-center px-4 sm:px-6 md:px-8 py-16"
         >
             <div className="w-full max-w-6xl mx-auto">
                 <motion.div
@@ -120,6 +120,15 @@ export function About() {
                             creating modern, responsive web applications that provide exceptional
                             user experiences.
                         </p>
+
+                        <div className="space-y-4">
+                            <h4 className="text-xl font-bold text-white">Beyond Coding</h4>
+                            <p className="text-base text-gray-300 leading-relaxed">
+                                When I'm not debugging or architecting new systems, you can find me exploring the outdoors.
+                                I love <strong>playing sports</strong> (particularly cricket and badminton) and expressing creativity through <strong>painting</strong>.
+                                These hobbies keep my mind fresh and foster the different perspectives I bring to problem-solving.
+                            </p>
+                        </div>
 
                         {/* Stats or highlights */}
                         <div className="grid grid-cols-2 gap-4 pt-6">
