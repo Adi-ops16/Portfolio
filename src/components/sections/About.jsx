@@ -36,12 +36,12 @@ export function About() {
                         {/* Main image container with gradient border */}
                         <div className="relative">
                             {/* Gradient border effect */}
-                            <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-primary rounded-3xl blur-xl opacity-50"></div>
+                            <div className="absolute inset-0 bg-linear-to-br from-primary via-secondary to-primary rounded-3xl blur-xl opacity-50"></div>
 
                             {/* Image */}
-                            <div className="relative rounded-3xl overflow-hidden border-4 border-white/10 w-80 h-96 sm:w-96 sm:h-[28rem]">
+                            <div className="relative rounded-3xl overflow-hidden border-4 border-white/10 w-80 h-96 sm:w-96 sm:h-122">
                                 <Image
-                                    src="/me.jpg"
+                                    src="/me.png"
                                     alt="Abdul Hasib - MERN Stack Developer"
                                     fill
                                     className="object-cover"
@@ -102,7 +102,7 @@ export function About() {
                     >
                         <div>
                             <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                                Hi, I&apos;m <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Abdul Hasib</span>
+                                Hi, I&apos;m <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">Abdul Hasib</span>
                             </h3>
                             <p className="text-xl text-gray-400 mb-6">MERN Stack Developer</p>
                         </div>
@@ -124,7 +124,7 @@ export function About() {
                         <div className="space-y-4">
                             <h4 className="text-xl font-bold text-white">Beyond Coding</h4>
                             <p className="text-base text-gray-300 leading-relaxed">
-                                When I'm not debugging or architecting new systems, you can find me exploring the outdoors.
+                                When I&apos;m not debugging or architecting new systems, you can find me exploring the outdoors.
                                 I love <strong>playing sports</strong> (particularly cricket and badminton) and expressing creativity through <strong>painting</strong>.
                                 These hobbies keep my mind fresh and foster the different perspectives I bring to problem-solving.
                             </p>
