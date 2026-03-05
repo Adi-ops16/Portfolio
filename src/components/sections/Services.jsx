@@ -48,10 +48,10 @@ const services = [
 export function Services() {
     return (
         <section id="services" className="relative w-full px-4 sm:px-6 lg:px-8 py-20 lg:py-32 overflow-hidden">
-            {/* Enhanced background effects */}
+            {/* Static background — removed animate-pulse which caused constant GPU repaints */}
             <div className="absolute inset-0 z-0 pointer-events-none">
-                <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-                <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+                <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl opacity-60" />
+                <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl opacity-60" />
             </div>
 
             <div className="relative z-10 mx-auto max-w-7xl">
@@ -100,13 +100,9 @@ function ServiceCard({ service, index }) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.15 }}
             viewport={{ once: true }}
-            whileHover={{
-                y: -8,
-                transition: { duration: 0.3 }
-            }}
-            className="group relative rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900/50 to-gray-900/30 backdrop-blur-xl p-8 transition-all duration-500 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/10 hover:bg-gradient-to-br hover:from-gray-900/70 hover:to-gray-900/50"
+            className="group relative rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900/50 to-gray-900/30 backdrop-blur-xl p-8 transition-all duration-300 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-2 hover:bg-gradient-to-br hover:from-gray-900/70 hover:to-gray-900/50"
         >
-            {/* Subtle animated gradient border (visible on hover) */}
+            {/* Subtle gradient border (visible on hover) */}
             <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 overflow-hidden pointer-events-none">
                 <div className={`absolute inset-[-1px] bg-gradient-to-r ${service.color} opacity-20 rounded-3xl blur-sm`} />
             </div>
@@ -121,13 +117,11 @@ function ServiceCard({ service, index }) {
                 </div>
 
                 {/* Icon with gradient background */}
-                <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.3 }}
-                    className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${service.color} mb-6 shadow-lg opacity-90 group-hover:opacity-100`}
+                <div
+                    className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${service.color} mb-6 shadow-lg opacity-90 group-hover:opacity-100 transition-opacity`}
                 >
                     <Icon className="w-8 h-8 text-white" />
-                </motion.div>
+                </div>
 
                 {/* Title */}
                 <h3 className="text-2xl font-bold text-white mb-4 font-display leading-tight group-hover:text-white transition-colors">
@@ -139,15 +133,11 @@ function ServiceCard({ service, index }) {
                     {service.description}
                 </p>
 
-                {/* Features List */}
+                {/* Features List — static rendering, no per-item animation */}
                 <ul className="space-y-3 mb-6">
                     {service.features.map((feature, i) => (
-                        <motion.li
+                        <li
                             key={i}
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ delay: index * 0.15 + i * 0.1 }}
-                            viewport={{ once: true }}
                             className="flex items-start gap-3 text-sm text-gray-300 group-hover:text-gray-200"
                         >
                             <div className={`w-5 h-5 flex-shrink-0 mt-0.5 rounded-full bg-gradient-to-r ${service.color} p-0.5 opacity-80 group-hover:opacity-100`}>
@@ -156,7 +146,7 @@ function ServiceCard({ service, index }) {
                                 </svg>
                             </div>
                             <span className="leading-relaxed">{feature}</span>
-                        </motion.li>
+                        </li>
                     ))}
                 </ul>
 
@@ -176,9 +166,3 @@ function ServiceCard({ service, index }) {
         </motion.div>
     );
 }
-
-// Add this to globals.css for the spin animation
-// @keyframes spin-slow {
-//   from { transform: rotate(0deg); }
-//   to { transform: rotate(360deg); }
-// }

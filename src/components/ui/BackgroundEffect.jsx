@@ -9,7 +9,7 @@ export const BackgroundEffect = () => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        const ctx = canvas.getContext("2d");
+        const ctx = canvas.getContext("2d", { alpha: true });
         if (!ctx) return;
 
         let width = window.innerWidth;
@@ -17,9 +17,9 @@ export const BackgroundEffect = () => {
         canvas.width = width;
         canvas.height = height;
 
-        // Reduced particle system for smoother, ambient movement
+        // Balancd particle count for beauty & performance
         const particles = [];
-        const numParticles = 100;
+        const numParticles = 75; // Increased from 35 back to closer to 100
 
         class Particle {
             constructor() {
@@ -31,20 +31,17 @@ export const BackgroundEffect = () => {
                 this.opacity = Math.random() * 0.4 + 0.2;
                 this.color = Math.random() > 0.5 ? '#8A2BE2' : '#00BFFF';
 
-                // Gentle drift towards center
                 this.targetX = width / 2 + (Math.random() - 0.5) * width * 0.6;
                 this.targetY = height / 2 + (Math.random() - 0.5) * height * 0.6;
             }
 
             update() {
-                // Very gentle drift towards target position
                 const dx = this.targetX - this.x;
                 const dy = this.targetY - this.y;
 
                 this.speedX += dx * 0.00005;
                 this.speedY += dy * 0.00005;
 
-                // Limit speed for smooth movement
                 const maxSpeed = 0.5;
                 const speed = Math.sqrt(this.speedX * this.speedX + this.speedY * this.speedY);
                 if (speed > maxSpeed) {
@@ -52,17 +49,14 @@ export const BackgroundEffect = () => {
                     this.speedY = (this.speedY / speed) * maxSpeed;
                 }
 
-                // Regular movement
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Wrap around edges
                 if (this.x < 0) this.x = width;
                 if (this.x > width) this.x = 0;
                 if (this.y < 0) this.y = height;
                 if (this.y > height) this.y = 0;
 
-                // Occasionally change target for natural movement
                 if (Math.random() < 0.001) {
                     this.targetX = width / 2 + (Math.random() - 0.5) * width * 0.6;
                     this.targetY = height / 2 + (Math.random() - 0.5) * height * 0.6;
@@ -76,7 +70,7 @@ export const BackgroundEffect = () => {
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Subtle glow
+                // Restored glow effect so it looks beautiful like before
                 ctx.shadowBlur = 8;
                 ctx.shadowColor = this.color;
                 ctx.fill();
@@ -84,22 +78,21 @@ export const BackgroundEffect = () => {
             }
         }
 
-        // Initialize particles
         for (let i = 0; i < numParticles; i++) {
             particles.push(new Particle());
         }
 
         // Gradient orbs for ambient background
         const orbs = [];
-        const numOrbs = 3;
+        const numOrbs = 2;
 
         class Orb {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
                 this.radius = Math.random() * 200 + 150;
-                this.speedX = (Math.random() - 0.5) * 0.2;
-                this.speedY = (Math.random() - 0.5) * 0.2;
+                this.speedX = (Math.random() - 0.5) * 0.15;
+                this.speedY = (Math.random() - 0.5) * 0.15;
                 this.hue = Math.random() * 60 + 260;
             }
 
@@ -107,7 +100,6 @@ export const BackgroundEffect = () => {
                 this.x += this.speedX;
                 this.y += this.speedY;
 
-                // Bounce off edges
                 if (this.x < -this.radius || this.x > width + this.radius) this.speedX *= -1;
                 if (this.y < -this.radius || this.y > height + this.radius) this.speedY *= -1;
             }
@@ -130,13 +122,15 @@ export const BackgroundEffect = () => {
             orbs.push(new Orb());
         }
 
-        // Animation loop
         let animationFrameId;
+
         const animate = () => {
+            animationFrameId = requestAnimationFrame(animate);
+
             ctx.clearRect(0, 0, width, height);
             ctx.globalAlpha = 1;
 
-            // Draw gradient orbs (background layer)
+            // Draw gradient orbs
             orbs.forEach(orb => {
                 orb.update();
                 orb.draw();
@@ -148,15 +142,19 @@ export const BackgroundEffect = () => {
                 particle.draw();
             });
 
-            // Draw subtle connections between very close particles
+            // Draw connections using optimized squared distance math (fixes lag)
             ctx.globalAlpha = 0.15;
-            particles.forEach((p1, i) => {
-                particles.slice(i + 1).forEach(p2 => {
+            for (let i = 0; i < particles.length; i++) {
+                const p1 = particles[i];
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
                     const dx = p1.x - p2.x;
                     const dy = p1.y - p2.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 80) {
+                    // Compare squared distance (6400 = 80px) to avoid computing Math.sqrt on every check
+                    const sqDist = dx * dx + dy * dy;
+                    if (sqDist < 6400) {
+                        const dist = Math.sqrt(sqDist);
                         ctx.beginPath();
                         ctx.strokeStyle = p1.color;
                         ctx.lineWidth = (80 - dist) / 80;
@@ -164,26 +162,27 @@ export const BackgroundEffect = () => {
                         ctx.lineTo(p2.x, p2.y);
                         ctx.stroke();
                     }
-                });
-            });
-
-            animationFrameId = requestAnimationFrame(animate);
+                }
+            }
         };
 
-        animate();
+        animationFrameId = requestAnimationFrame(animate);
 
-        // Resize handler
+        // Debounced resize handler
+        let resizeTimeout;
         const handleResize = () => {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                canvas.width = width;
+                canvas.height = height;
 
-            // Update particle targets after resize
-            particles.forEach(p => {
-                p.targetX = width / 2 + (Math.random() - 0.5) * width * 0.6;
-                p.targetY = height / 2 + (Math.random() - 0.5) * height * 0.6;
-            });
+                particles.forEach(p => {
+                    p.targetX = width / 2 + (Math.random() - 0.5) * width * 0.6;
+                    p.targetY = height / 2 + (Math.random() - 0.5) * height * 0.6;
+                });
+            }, 200);
         };
 
         window.addEventListener("resize", handleResize);
@@ -191,6 +190,7 @@ export const BackgroundEffect = () => {
         return () => {
             window.removeEventListener("resize", handleResize);
             cancelAnimationFrame(animationFrameId);
+            clearTimeout(resizeTimeout);
         };
     }, []);
 

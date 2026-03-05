@@ -103,8 +103,7 @@ function ProjectCard({ project, index }) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             viewport={{ once: true }}
-            whileHover={{ y: -10 }}
-            className="flex flex-col gap-4 rounded-xl border border-white/10 bg-gray-900/40 p-5 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 group"
+            className="flex flex-col gap-4 rounded-xl border border-white/10 bg-gray-900/40 p-5 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2.5 group"
         >
             <div className="w-full aspect-video overflow-hidden rounded-lg relative">
                 <div className="w-full h-full bg-center bg-no-repeat bg-cover transition-transform duration-500 group-hover:scale-110"
@@ -127,6 +126,7 @@ function ProjectCard({ project, index }) {
             <div className="mt-auto flex gap-3 pt-4">
                 <a className="inline-flex h-9 flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-lg bg-primary px-4 text-sm font-medium text-white shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background-dark"
                     target='_blank'
+                    rel='noopener noreferrer'
                     href={`${project.live_link}`}>
                     Live Demo
                 </a>

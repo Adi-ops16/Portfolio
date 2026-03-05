@@ -19,6 +19,18 @@
 
 html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* GPU-accelerate the fixed canvas background */
+canvas.fixed {
+    will-change: transform;
+}
+
+/* Allow the browser to skip rendering offscreen sections */
+section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 800px;
 }
 
 @layer base {

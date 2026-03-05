@@ -44,11 +44,11 @@ export function Contact() {
             id="contact"
             className="relative w-full min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-background-dark overflow-hidden"
         >
-            {/* Animated gradient background */}
+            {/* Gradient background — static, no animate-pulse to avoid constant GPU repaints */}
             <div className="absolute inset-0 z-0">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background-dark to-secondary/20"></div>
-                <div className="absolute top-0 right-0 w-96 h-96 bg-primary/30 rounded-full blur-3xl animate-pulse"></div>
-                <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute top-0 right-0 w-96 h-96 bg-primary/30 rounded-full blur-3xl opacity-70"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/30 rounded-full blur-3xl opacity-70"></div>
             </div>
 
             <div className="relative z-10 w-full max-w-6xl mx-auto">
