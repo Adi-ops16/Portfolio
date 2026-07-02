@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { FaReact } from "react-icons/fa";
-import { SiMongodb } from "react-icons/si";
+import { SiPostgresql } from "react-icons/si";
 import Image from "next/image";
 
 export function About() {
@@ -41,8 +41,8 @@ export function About() {
                             {/* Image */}
                             <div className="relative rounded-3xl overflow-hidden border-4 border-white/10 w-80 h-96 sm:w-96 sm:h-122">
                                 <Image
-                                    src="/me.png"
-                                    alt="Abdul Hasib - MERN Stack Developer"
+                                    src="/me.jpeg"
+                                    alt="Abdul Hasib - Full Stack Developer"
                                     fill
                                     className="object-cover"
                                     priority
@@ -59,7 +59,7 @@ export function About() {
                                     repeat: Infinity,
                                     ease: "easeInOut"
                                 }}
-                                className="absolute -top-6 -left-6 bg-gradient-to-br from-gray-900 to-gray-800 p-4 rounded-2xl border border-white/10 shadow-2xl"
+                                className="absolute -top-6 -left-6 bg-linear-to-br from-gray-900 to-gray-800 p-4 rounded-2xl border border-white/10 shadow-2xl"
                             >
                                 <div className="relative">
                                     <div className="absolute inset-0 bg-cyan-500/20 blur-xl rounded-full"></div>
@@ -69,7 +69,7 @@ export function About() {
                                 <p className="text-sm text-white font-bold">React.js</p>
                             </motion.div>
 
-                            {/* Floating MongoDB Icon - Bottom Right */}
+                            {/* Floating Postgresql Icon - Bottom Right */}
                             <motion.div
                                 animate={{
                                     y: [0, 20, 0],
@@ -80,14 +80,14 @@ export function About() {
                                     ease: "easeInOut",
                                     delay: 1.5
                                 }}
-                                className="absolute -bottom-6 -right-6 bg-gradient-to-br from-gray-900 to-gray-800 p-4 rounded-2xl border border-white/10 shadow-2xl"
+                                className="absolute -bottom-6 -right-6 bg-linear-to-br from-gray-900 to-gray-800 p-4 rounded-2xl border border-white/10 shadow-2xl"
                             >
                                 <div className="relative">
                                     <div className="absolute inset-0 bg-green-500/20 blur-xl rounded-full"></div>
-                                    <SiMongodb className="w-12 h-12 text-green-500 relative z-10" />
+                                    <SiPostgresql className="w-12 h-12 text-green-500 relative z-10" />
                                 </div>
                                 <p className="text-xs text-white mt-2 font-semibold">Powered by</p>
-                                <p className="text-sm text-white font-bold">MongoDB</p>
+                                <p className="text-sm text-white font-bold">PostgreSQL</p>
                             </motion.div>
                         </div>
                     </motion.div>
@@ -104,29 +104,23 @@ export function About() {
                             <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4">
                                 Hi, I&apos;m <span className="bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">Abdul Hasib</span>
                             </h3>
-                            <p className="text-xl text-gray-400 mb-6">MERN Stack Developer</p>
+                            <p className="text-xl text-gray-400 mb-6">Full Stack Developer</p>
                         </div>
 
                         <p className="text-base text-gray-300 leading-relaxed">
-                            I am a passionate MERN Stack Developer dedicated to building efficient
-                            and scalable web applications. With a strong foundation in MongoDB,
-                            Express.js, React, and Node.js, I enjoy solving complex problems and
+                            I am a passionate Full Stack Developer dedicated to building efficient
+                            and scalable web applications. With a strong foundation in modern web techs like Express.js, React, postgreSQL, Node.js, Prisma etc. I enjoy solving complex problems and
                             creating seamless user experiences.
                         </p>
 
                         <p className="text-base text-gray-300 leading-relaxed">
-                            My journey in development is driven by curiosity to learn new technologies
-                            and a commitment to writing clean, maintainable code. I specialize in
-                            creating modern, responsive web applications that provide exceptional
-                            user experiences.
+                            I enjoy exploring new technologies and constantly improving my skills as a developer. My focus is on writing clean, maintainable and industry standard code that ships fast without breaking.
                         </p>
 
                         <div className="space-y-4">
                             <h4 className="text-xl font-bold text-white">Beyond Coding</h4>
                             <p className="text-base text-gray-300 leading-relaxed">
-                                When I&apos;m not debugging or architecting new systems, you can find me exploring the outdoors.
-                                I love <strong>playing sports</strong> (particularly cricket and badminton) and expressing creativity through <strong>painting</strong>.
-                                These hobbies keep my mind fresh and foster the different perspectives I bring to problem-solving.
+                                Coding is a big part of my life, but I also enjoy taking breaks and getting outside. I love playing football and badminton whenever I get the chance. It&apos;s a great way to stay active, refresh my mind, and return to the desk with a different problem to solve.
                             </p>
                         </div>
 

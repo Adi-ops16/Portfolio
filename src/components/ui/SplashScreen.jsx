@@ -1,30 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+// Particles are purely decorative random values. Computed once at module load
+// (outside the component) so the React Compiler never sees Math.random() during render.
+const PARTICLES = [...Array(20)].map((_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    animateX: [(Math.random() - 0.5) * 200, (Math.random() - 0.5) * 50],
+    animateY: [(Math.random() - 0.5) * 200, (Math.random() - 0.5) * 50],
+    delay: i * 0.1,
+}));
 
 export const SplashScreen = ({ onComplete }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [progress, setProgress] = useState(0);
-    const [particles, setParticles] = useState([]);
+
+    // Stabilise the callback so the effect below doesn't re-run when the
+    // parent re-renders and passes a new function reference each time.
+    const onCompleteRef = useRef(onComplete);
+    useEffect(() => {
+        onCompleteRef.current = onComplete;
+    });
 
     useEffect(() => {
-        // 1. Generate stable configuration arrays on mount without tracking dimensions state
-        const newParticles = [...Array(20)].map((_, i) => ({
-            id: i,
-            // Use CSS layout positioning via viewport coordinates instead of manual pixel calculations
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            // Drive framer motion offsets relative to their initial node positions
-            animateX: [(Math.random() - 0.5) * 200, (Math.random() - 0.5) * 50],
-            animateY: [(Math.random() - 0.5) * 200, (Math.random() - 0.5) * 50],
-            delay: i * 0.1
-        }));
-        
-        // eslint-disable-next-line react-hooks/set-state-in-effect
-        setParticles(newParticles);
-
-        // 2. Progress interval loop
+        // 1. Progress interval loop
         const progressInterval = setInterval(() => {
             setProgress(prev => {
                 if (prev >= 100) {
@@ -38,14 +40,14 @@ export const SplashScreen = ({ onComplete }) => {
         // 3. Lifecycle timer exit
         const timer = setTimeout(() => {
             setIsVisible(false);
-            if (onComplete) onComplete();
+            if (onCompleteRef.current) onCompleteRef.current();
         }, 3000);
 
         return () => {
             clearTimeout(timer);
             clearInterval(progressInterval);
         };
-    }, [onComplete]);
+    }, []); // onComplete accessed via ref; particles computed via useMemo — no deps needed
 
     return (
         <AnimatePresence>
@@ -69,7 +71,7 @@ export const SplashScreen = ({ onComplete }) => {
                     />
 
                     {/* Floating Particles (No layout shifts or dimension dependencies) */}
-                    {particles.map((p) => (
+                    {PARTICLES.map((p) => (
                         <motion.div
                             key={p.id}
                             style={{ left: p.left, top: p.top }}

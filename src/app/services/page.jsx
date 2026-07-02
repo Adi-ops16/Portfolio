@@ -14,7 +14,6 @@ function ServicesContent() {
 
     useEffect(() => {
         if (categoryParam && services.find(s => s.slug === categoryParam)) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect
             setActiveSlug(categoryParam);
         }
     }, [categoryParam]);

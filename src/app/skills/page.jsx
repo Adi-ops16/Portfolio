@@ -44,7 +44,6 @@ function SkillsContent() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory"
-                    style={{ WebkitOverflowScrolling: 'touch' }}
                 >
                     {skillCategories.map((category) => {
                         const Icon = category.icon;

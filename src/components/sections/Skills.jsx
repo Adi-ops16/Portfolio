@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { FaJs, FaReact, FaNodeJs, FaGitAlt, FaGithub } from 'react-icons/fa';
 import { SiTailwindcss, SiTypescript, SiNextdotjs, SiExpress, SiPostgresql, SiPrisma, SiMongodb, SiFramer } from 'react-icons/si';
@@ -20,6 +20,15 @@ const skills = [
     { name: "Prisma", proficiency: 80, category: "Backend", icon: SiPrisma },
     { name: "MongoDB", proficiency: 85, category: "Backend", icon: SiMongodb }
 ];
+
+function getFloatParams(index) {
+    // Use index-based seeding to produce stable, varied values without Math.random in render
+    const base = (index * 2654435761) >>> 0; // simple hash
+    const y = (base % 60 + 40) / 10;          // 4.0 to 10.0
+    const duration = (base % 20 + 30) / 10;   // 3.0 to 5.0
+    const delay = (base % 15) / 10;            // 0.0 to 1.5
+    return { y, duration, delay };
+}
 
 export function Skills() {
     const frontendSkills = skills.filter(s => s.category === "Frontend");
@@ -67,7 +76,7 @@ export function Skills() {
                         </h3>
                         <div className="flex flex-wrap items-center justify-center gap-8 max-w-4xl px-4">
                             {frontendSkills.map((skill, index) => (
-                                <SkillBubble key={skill.name} skill={skill} index={index} />
+                                <SkillBubble key={skill.name} skill={skill} index={index} floatParams={getFloatParams(index)} />
                             ))}
                         </div>
                     </div>
@@ -79,7 +88,7 @@ export function Skills() {
                         </h3>
                         <div className="flex flex-wrap items-center justify-center gap-8 max-w-4xl px-4">
                             {backendSkills.map((skill, index) => (
-                                <SkillBubble key={skill.name} skill={skill} index={index} />
+                                <SkillBubble key={skill.name} skill={skill} index={index} floatParams={getFloatParams(index)} />
                             ))}
                         </div>
                     </div>
@@ -89,19 +98,12 @@ export function Skills() {
     );
 }
 
-function SkillBubble({ skill, index }) {
+function SkillBubble({ skill, index, floatParams }) {
     const Icon = skill.icon;
 
     // Circumference for strokeDasharray math: 2 * PI * R (where R = 41px) -> ~257.6
     const radius = 41;
     const circ = 2 * Math.PI * radius;
-
-    // Persist random floating values across renders
-    const floatParams = useRef({
-        y: Math.random() * 6 + 4, // 4px to 10px drift
-        duration: Math.random() * 2 + 3, // 3s to 5s loop
-        delay: Math.random() * 1.5 // staggered delay
-    }).current;
 
     return (
         <motion.div

@@ -1,6 +1,6 @@
 import { FaJs, FaReact, FaNodeJs, FaGitAlt, FaGithub } from 'react-icons/fa';
 import {
-    SiTailwindcss, SiTypescript, SiNextdotjs, SiExpress, SiPostgresql, SiPrisma, SiMongodb, SiFramer, SiVercel, SiHtml5, SiCss3, SiPostman, SiMongoose, SiNetlify,
+    SiTailwindcss, SiTypescript, SiNextdotjs, SiExpress, SiPostgresql, SiPrisma, SiMongodb, SiFramer, SiVercel, SiHtml5, SiCss, SiPostman, SiMongoose, SiNetlify,
     SiFirebase,
 } from 'react-icons/si';
 import { TbCode, TbLayout, TbServer, TbDatabase, TbTools } from 'react-icons/tb';
@@ -22,7 +22,7 @@ export const skills = [
     { name: 'React.js', category: 'frontend', icon: FaReact },
     { name: 'Tailwind CSS', category: 'frontend', icon: SiTailwindcss },
     { name: 'HTML5', category: 'frontend', icon: SiHtml5 },
-    { name: 'CSS3', category: 'frontend', icon: SiCss3 },
+    { name: 'CSS3', category: 'frontend', icon: SiCss },
     { name: 'Framer Motion', category: 'frontend', icon: SiFramer },
     // Backend
     { name: 'Node.js', category: 'backend', icon: FaNodeJs },

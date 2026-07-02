@@ -5,6 +5,6 @@ export default function robots() {
             allow: '/',
             disallow: '/private/',
         },
-        sitemap: 'https://portfolio-olive-one-13.vercel.app/',
+        sitemap: 'https://portfolio-olive-one-13.vercel.app/sitemap.xml',
     }
 }

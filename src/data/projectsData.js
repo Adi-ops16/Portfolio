@@ -1,5 +1,3 @@
-import { validateProject } from '@/lib/utils';
-
 /** @type {Project[]} */
 export const projects = [
   {
@@ -154,8 +152,3 @@ export const projects = [
     featured: false,
   },
 ];
-
-// Validate all projects in development
-if (process.env.NODE_ENV === 'development') {
-  projects.forEach(validateProject);
-}

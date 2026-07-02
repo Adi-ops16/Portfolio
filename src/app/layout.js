@@ -69,6 +69,14 @@ export const metadata = {
   }
 };
 
+/**
+ * Safely serialize JSON for inline script tags.
+ * Escapes </script> to prevent script tag breakout attacks.
+ */
+function safeJsonLd(data) {
+  return JSON.stringify(data).replace(/<\/script>/gi, '<\\/script>');
+}
+
 export default function RootLayout({ children }) {
   const structuredData = {
     "@context": "https://schema.org",
@@ -79,8 +87,7 @@ export default function RootLayout({ children }) {
     url: "https://portfolio-olive-one-13.vercel.app/",
     sameAs: [
       "https://github.com/Adi-ops16",
-      "",
-      "https://twitter.com/yourhandle"
+      "https://x.com/AbdulHasib95581"
     ],
     knowsAbout: [
       "React",
@@ -94,15 +101,22 @@ export default function RootLayout({ children }) {
       "Web Development",
       "MERN Stack"
     ],
-    alumniOf: {
-      "@type": "Programming-hero",
-      name: "Complete web development by programming hero"
-    }
   };
 
   return (
     <html lang="en" className="dark scroll-smooth">
       <head>
+        {/* Material Symbols — used for icons in contact page and project detail */}
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap"
           rel="stylesheet"
@@ -112,7 +126,7 @@ export default function RootLayout({ children }) {
         <Script
           id="structured-data"
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(structuredData) }}
         />
         <SmoothScroll>
           <SplashScreen />

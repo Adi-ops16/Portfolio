@@ -216,7 +216,7 @@ function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="text-xs text-gray-500 uppercase tracking-wider">WhatsApp</p>
-                                        <a className="text-gray-300 hover:text-white transition-colors text-sm" href="https://wa.me/8801918389189" target="_blank">+880 1918-389-189</a>
+                                        <a className="text-gray-300 hover:text-white transition-colors text-sm" href="https://wa.me/8801918389189" target="_blank" rel="noopener noreferrer">+880 1918-389-189</a>
                                     </div>
                                 </div>
                             </div>
@@ -227,6 +227,7 @@ function ContactPage() {
                             <div className="flex gap-4">
                                 <a className="w-11 h-11 rounded-xl bg-gray-800/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
                                     target="_blank"
+                                    rel="noreferrer"
                                     href="https://github.com/Adi-ops16"
                                     aria-label="GitHub"
                                 >
@@ -237,6 +238,7 @@ function ContactPage() {
                                 <a className="w-11 h-11 rounded-xl bg-gray-800/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
                                     target="_blank"
                                     href="#"
+                                    rel="noopener noreferrer"
                                     aria-label="LinkedIn"
                                 >
                                     <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -245,6 +247,7 @@ function ContactPage() {
                                 </a>
                                 <a className="w-11 h-11 rounded-xl bg-gray-800/80 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-primary/50 hover:bg-primary/10 transition-all duration-300"
                                     target="_blank"
+                                    rel="noreferrer"
                                     href="https://x.com/AbdulHasib95581"
                                     aria-label="Twitter"
                                 >
