@@ -1,21 +1,24 @@
 "use client";
 
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
+import { motion } from 'framer-motion';
+import { FaJs, FaReact, FaNodeJs, FaGitAlt, FaGithub } from 'react-icons/fa';
+import { SiTailwindcss, SiTypescript, SiNextdotjs, SiExpress, SiPostgresql, SiPrisma, SiMongodb, SiFramer } from 'react-icons/si';
 
 const skills = [
-    { name: "HTML", proficiency: 90, category: "Frontend" },
-    { name: "CSS", proficiency: 85, category: "Frontend" },
-    { name: "Tailwind CSS", proficiency: 90, category: "Frontend" },
-    { name: "JavaScript", proficiency: 85, category: "Frontend" },
-    { name: "React", proficiency: 80, category: "Frontend" },
-    { name: "Next.js", proficiency: 50, category: "Frontend" },
-    { name: "DaisyUI", proficiency: 90, category: "Frontend" },
-    { name: "Node.js", proficiency: 70, category: "Backend" },
-    { name: "Express.js", proficiency: 80, category: "Backend" },
-    { name: "MongoDB", proficiency: 80, category: "Backend" },
-    { name: "Git", proficiency: 70, category: "Tools" },
-    { name: "GitHub", proficiency: 70, category: "Tools" },
+    // Frontend
+    { name: "Next.js", proficiency: 65, category: "Frontend", icon: SiNextdotjs },
+    { name: "React.js", proficiency: 90, category: "Frontend", icon: FaReact },
+    { name: "TypeScript", proficiency: 75, category: "Frontend", icon: SiTypescript },
+    { name: "JavaScript", proficiency: 80, category: "Frontend", icon: FaJs },
+    { name: "Tailwind CSS", proficiency: 95, category: "Frontend", icon: SiTailwindcss },
+
+    // Backend
+    { name: "Node.js", proficiency: 85, category: "Backend", icon: FaNodeJs },
+    { name: "Express.js", proficiency: 85, category: "Backend", icon: SiExpress },
+    { name: "PostgreSQL", proficiency: 80, category: "Backend", icon: SiPostgresql },
+    { name: "Prisma", proficiency: 80, category: "Backend", icon: SiPrisma },
+    { name: "MongoDB", proficiency: 85, category: "Backend", icon: SiMongodb }
 ];
 
 export function Skills() {
@@ -24,50 +27,61 @@ export function Skills() {
     const toolSkills = skills.filter(s => s.category === "Tools");
 
     return (
-        <section id="skills" className="relative w-full px-4 sm:px-6 lg:px-8 py-16 md:py-24 overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 via-transparent to-transparent"></div>
-                <div className="absolute bottom-0 right-0 h-1/2 w-1/2 rounded-full bg-[radial-gradient(circle_at_center,_rgba(19,91,236,0.15),_transparent_40%)]"></div>
-                <div className="absolute top-0 left-0 h-2/3 w-2/3 rounded-full bg-[radial-gradient(circle_at_center,_rgba(119,82,254,0.1),_transparent_40%)]"></div>
+        <section id="skills" className="relative w-full px-4 sm:px-6 lg:px-8 py-10 lg:py-14 overflow-hidden">
+            {/* Global Gradient Definition for SVG progress borders */}
+            <svg className="absolute w-0 h-0" width="0" height="0">
+                <defs>
+                    <linearGradient id="skill-progress-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="var(--color-primary, #8A2BE2)" />
+                        <stop offset="100%" stopColor="var(--color-secondary, #00BFFF)" />
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            {/* Background decoration */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+                <div className="absolute top-1/3 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-50" />
+                <div className="absolute bottom-1/3 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl opacity-50" />
             </div>
 
             <div className="relative z-10 mx-auto max-w-5xl">
+                {/* Section Title */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-center"
+                    className="text-center mb-16"
                 >
-                    <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">Technologies & Skills</h2>
-                    <p className="mt-4 text-lg text-gray-400">My technical expertise and proficiency levels.</p>
+                    <h2 className="text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight font-display">
+                        Technologies & <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Skills</span>
+                    </h2>
                 </motion.div>
 
-                <div className="mt-12 md:mt-16">
-                    <h3 className="text-lg font-semibold text-primary mb-6">Frontend Development</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {frontendSkills.map((skill, index) => (
-                            <SkillCard key={index} skill={skill} index={index} />
-                        ))}
+                {/* Skill Groups */}
+                <div className="space-y-16 md:space-y-20">
+                    {/* Frontend */}
+                    <div className="flex flex-col items-center">
+                        <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-10 text-center">
+                            Frontend Development
+                        </h3>
+                        <div className="flex flex-wrap items-center justify-center gap-8 max-w-4xl px-4">
+                            {frontendSkills.map((skill, index) => (
+                                <SkillBubble key={skill.name} skill={skill} index={index} />
+                            ))}
+                        </div>
                     </div>
-                </div>
 
-                <div className="mt-10">
-                    <h3 className="text-lg font-semibold text-primary mb-6">Backend & Databases</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {backendSkills.map((skill, index) => (
-                            <SkillCard key={index} skill={skill} index={index} />
-                        ))}
-                    </div>
-                </div>
-
-                <div className="mt-10">
-                    <h3 className="text-lg font-semibold text-primary mb-6">Tools & Platforms</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {toolSkills.map((skill, index) => (
-                            <SkillCard key={index} skill={skill} index={index} />
-                        ))}
+                    {/* Backend */}
+                    <div className="flex flex-col items-center">
+                        <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-10 text-center">
+                            Backend & Databases
+                        </h3>
+                        <div className="flex flex-wrap items-center justify-center gap-8 max-w-4xl px-4">
+                            {backendSkills.map((skill, index) => (
+                                <SkillBubble key={skill.name} skill={skill} index={index} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,43 +89,106 @@ export function Skills() {
     );
 }
 
-function SkillCard({ skill, index }) {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true, margin: "-100px" });
+function SkillBubble({ skill, index }) {
+    const Icon = skill.icon;
+
+    // Circumference for strokeDasharray math: 2 * PI * R (where R = 41px) -> ~257.6
+    const radius = 41;
+    const circ = 2 * Math.PI * radius;
+
+    // Persist random floating values across renders
+    const floatParams = useRef({
+        y: Math.random() * 6 + 4, // 4px to 10px drift
+        duration: Math.random() * 2 + 3, // 3s to 5s loop
+        delay: Math.random() * 1.5 // staggered delay
+    }).current;
 
     return (
         <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="group relative rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20"
-            style={{
-                boxShadow: '0 0 20px rgba(138, 43, 226, 0.1), 0 0 40px rgba(0, 191, 255, 0.05)'
+            animate={{
+                y: [0, -floatParams.y, 0]
             }}
+            transition={{
+                y: {
+                    duration: floatParams.duration,
+                    delay: floatParams.delay,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                }
+            }}
+            className="relative select-none"
         >
-            {/* Gradient glow effect */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary/10 to-secondary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl"></div>
+            <motion.div
+                initial="initial"
+                whileHover="hover"
+                className="group relative w-24 h-24 rounded-full flex items-center justify-center bg-white/[0.02] border border-white/[0.04] backdrop-blur-md cursor-pointer transition-all duration-300 hover:bg-[#101622]/85 hover:border-primary/10 hover:shadow-xl hover:shadow-primary/5"
+            >
+                {/* SVG Progress Circle Acting as Border */}
+                <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none z-10" viewBox="0 0 96 96">
+                    {/* Base circle background */}
+                    <circle
+                        cx="48"
+                        cy="48"
+                        r={radius}
+                        stroke="rgba(255, 255, 255, 0.03)"
+                        strokeWidth="2.5"
+                        fill="transparent"
+                    />
+                    {/* Animated Progress circle */}
+                    <motion.circle
+                        cx="48"
+                        cy="48"
+                        r={radius}
+                        stroke="url(#skill-progress-gradient)"
+                        strokeWidth="3"
+                        fill="transparent"
+                        strokeDasharray={circ}
+                        initial={{ strokeDashoffset: circ }}
+                        whileInView={{ strokeDashoffset: circ - (circ * skill.proficiency) / 100 }}
+                        transition={{ duration: 1.2, delay: index * 0.05 + 0.1, ease: "easeOut" }}
+                        viewport={{ once: true }}
+                        strokeLinecap="round"
+                    />
+                </svg>
 
-            <div className="flex items-center justify-between mb-3">
-                <h4 className="text-lg font-semibold text-white">{skill.name}</h4>
-                <span className="text-sm font-bold text-primary">{skill.proficiency}%</span>
-            </div>
+                {/* Inner Content */}
+                <div className="relative z-20 flex flex-col items-center justify-center w-full h-full p-2 overflow-hidden">
+                    {/* Default Logo View */}
+                    <motion.div
+                        variants={{
+                            initial: { opacity: 1, scale: 1 },
+                            hover: { opacity: 0, scale: 0.65 }
+                        }}
+                        transition={{ duration: 0.25, ease: "easeInOut" }}
+                        className="text-gray-400 group-hover:text-primary transition-colors flex items-center justify-center"
+                    >
+                        <Icon size={28} />
+                    </motion.div>
 
-            {/* Progress bar background */}
-            <div className="relative h-2 bg-white/10 rounded-full overflow-hidden">
-                {/* Animated progress bar */}
-                <motion.div
-                    initial={{ width: 0 }}
-                    animate={isInView ? { width: `${skill.proficiency}%` } : { width: 0 }}
-                    transition={{ duration: 1, delay: index * 0.1 + 0.3, ease: "easeOut" }}
-                    className="absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-primary to-secondary"
-                    style={{
-                        boxShadow: '0 0 10px rgba(138, 43, 226, 0.5), 0 0 20px rgba(0, 191, 255, 0.3)'
-                    }}
-                />
-            </div>
+                    {/* Hover Detail View */}
+                    <motion.div
+                        variants={{
+                            initial: { opacity: 0, scale: 0.7, y: 15 },
+                            hover: { opacity: 1, scale: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.25, ease: "easeOut" }}
+                        className="absolute inset-0 flex flex-col items-center justify-center p-2 text-center"
+                    >
+                        <span className="text-[10px] font-bold text-white leading-tight mb-0.5 max-w-[80px] truncate">
+                            {skill.name}
+                        </span>
+                        <span className="text-[9px] font-extrabold text-primary uppercase tracking-wide">
+                            {skill.proficiency}%
+                        </span>
+                        <span className="text-[8px] text-gray-500 uppercase tracking-widest mt-0.5">
+                            Mastery
+                        </span>
+                    </motion.div>
+                </div>
+            </motion.div>
         </motion.div>
     );
 }

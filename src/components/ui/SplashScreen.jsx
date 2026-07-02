@@ -6,33 +6,25 @@ import { motion, AnimatePresence } from "framer-motion";
 export const SplashScreen = ({ onComplete }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [progress, setProgress] = useState(0);
-    const [dimensions, setDimensions] = useState({ width: 800, height: 600 });
     const [particles, setParticles] = useState([]);
 
     useEffect(() => {
-        // Set actual window dimensions after mount (fixes SSR)
-        const width = window.innerWidth;
-        const height = window.innerHeight;
-        setDimensions({ width, height });
-
-        // Generate stable particles on mount
+        // 1. Generate stable configuration arrays on mount without tracking dimensions state
         const newParticles = [...Array(20)].map((_, i) => ({
             id: i,
-            initialX: Math.random() * width,
-            initialY: Math.random() * height,
-            animateX: [
-                Math.random() * width,
-                width / 2 + (Math.random() - 0.5) * 100
-            ],
-            animateY: [
-                Math.random() * height,
-                height / 2 + (Math.random() - 0.5) * 100
-            ],
+            // Use CSS layout positioning via viewport coordinates instead of manual pixel calculations
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            // Drive framer motion offsets relative to their initial node positions
+            animateX: [(Math.random() - 0.5) * 200, (Math.random() - 0.5) * 50],
+            animateY: [(Math.random() - 0.5) * 200, (Math.random() - 0.5) * 50],
             delay: i * 0.1
         }));
+        
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setParticles(newParticles);
 
-        // Progress animation
+        // 2. Progress interval loop
         const progressInterval = setInterval(() => {
             setProgress(prev => {
                 if (prev >= 100) {
@@ -43,6 +35,7 @@ export const SplashScreen = ({ onComplete }) => {
             });
         }, 30);
 
+        // 3. Lifecycle timer exit
         const timer = setTimeout(() => {
             setIsVisible(false);
             if (onComplete) onComplete();
@@ -61,44 +54,26 @@ export const SplashScreen = ({ onComplete }) => {
                     initial={{ opacity: 1 }}
                     exit={{ opacity: 0, filter: "blur(10px)" }}
                     transition={{ duration: 0.5 }}
-                    className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gradient-to-br from-background-dark via-[#0a0e1a] to-background-dark overflow-hidden"
+                    className="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-linear-to-br from-background-dark via-[#0a0e1a] to-background-dark overflow-hidden"
                 >
-                    {/* Animated background gradient orbs */}
+                    {/* Background Orbs */}
                     <motion.div
-                        animate={{
-                            scale: [1, 1.2, 1],
-                            opacity: [0.3, 0.5, 0.3],
-                        }}
-                        transition={{
-                            duration: 3,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
+                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                         className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-3xl"
                     />
                     <motion.div
-                        animate={{
-                            scale: [1, 1.3, 1],
-                            opacity: [0.2, 0.4, 0.2],
-                        }}
-                        transition={{
-                            duration: 3,
-                            delay: 0.5,
-                            repeat: Infinity,
-                            ease: "easeInOut"
-                        }}
+                        animate={{ scale: [1, 1.3, 1], opacity: [0.2, 0.4, 0.2] }}
+                        transition={{ duration: 3, delay: 0.5, repeat: Infinity, ease: "easeInOut" }}
                         className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/30 rounded-full blur-3xl"
                     />
 
-                    {/* Floating particles */}
+                    {/* Floating Particles (No layout shifts or dimension dependencies) */}
                     {particles.map((p) => (
                         <motion.div
                             key={p.id}
-                            initial={{
-                                x: p.initialX,
-                                y: p.initialY,
-                                opacity: 0
-                            }}
+                            style={{ left: p.left, top: p.top }}
+                            initial={{ x: 0, y: 0, opacity: 0 }}
                             animate={{
                                 x: p.animateX,
                                 y: p.animateY,
@@ -107,7 +82,7 @@ export const SplashScreen = ({ onComplete }) => {
                             transition={{
                                 duration: 2,
                                 delay: p.delay,
-                                ease: "easeInOut"
+                                ease: "easeInOut",
                             }}
                             className="absolute w-1 h-1 bg-primary rounded-full"
                         />
@@ -119,45 +94,22 @@ export const SplashScreen = ({ onComplete }) => {
                         transition={{ duration: 1, ease: "easeOut" }}
                         className="flex flex-col items-center gap-8 relative z-10"
                     >
-                        {/* Logo with pulse effect */}
+                        {/* Logo */}
                         <div className="relative">
-                            {/* Pulsing rings */}
                             <motion.div
-                                animate={{
-                                    scale: [1, 1.5],
-                                    opacity: [0.5, 0],
-                                }}
-                                transition={{
-                                    duration: 1.5,
-                                    repeat: Infinity,
-                                    ease: "easeOut"
-                                }}
+                                animate={{ scale: [1, 1.5], opacity: [0.5, 0] }}
+                                transition={{ duration: 1.5, repeat: Infinity, ease: "easeOut" }}
                                 className="absolute inset-0 rounded-full border-2 border-primary"
                             />
                             <motion.div
-                                animate={{
-                                    scale: [1, 1.5],
-                                    opacity: [0.3, 0],
-                                }}
-                                transition={{
-                                    duration: 1.5,
-                                    delay: 0.5,
-                                    repeat: Infinity,
-                                    ease: "easeOut"
-                                }}
+                                animate={{ scale: [1, 1.5], opacity: [0.3, 0] }}
+                                transition={{ duration: 1.5, delay: 0.5, repeat: Infinity, ease: "easeOut" }}
                                 className="absolute inset-0 rounded-full border-2 border-secondary"
                             />
 
-                            {/* Animated logo */}
                             <motion.div
-                                animate={{
-                                    rotate: [0, 360],
-                                }}
-                                transition={{
-                                    duration: 20,
-                                    repeat: Infinity,
-                                    ease: "linear"
-                                }}
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                                 className="relative size-24 md:size-32"
                             >
                                 <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
@@ -181,13 +133,13 @@ export const SplashScreen = ({ onComplete }) => {
                             </motion.div>
                         </div>
 
-                        {/* Title with stagger animation */}
+                        {/* Text Content */}
                         <div className="overflow-hidden">
                             <motion.h1
                                 initial={{ y: 100, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                                className="text-5xl md:text-6xl font-bold font-display tracking-wider bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent"
+                                className="text-5xl md:text-6xl font-bold tracking-wider bg-linear-to-r from-primary via-secondary to-primary bg-clip-text text-transparent"
                             >
                                 Abdul Hasib
                             </motion.h1>
@@ -199,7 +151,7 @@ export const SplashScreen = ({ onComplete }) => {
                             transition={{ delay: 0.8, duration: 0.6 }}
                             className="text-gray-400 text-sm md:text-base tracking-widest uppercase"
                         >
-                            MERN Stack Developer
+                            Full Stack Developer
                         </motion.p>
 
                         {/* Progress bar */}
@@ -211,7 +163,7 @@ export const SplashScreen = ({ onComplete }) => {
                         >
                             <motion.div
                                 style={{ width: `${progress}%` }}
-                                className="h-full bg-gradient-to-r from-primary to-secondary relative"
+                                className="h-full bg-linear-to-r from-primary to-secondary relative"
                             >
                                 <div className="absolute inset-0 bg-white/30 animate-pulse" />
                             </motion.div>

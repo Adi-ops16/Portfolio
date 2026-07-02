@@ -8,7 +8,7 @@ export function Button({
     glow = false,
     ...props
 }) {
-    const baseStyles = "flex items-center justify-center overflow-hidden rounded-full h-12 px-8 text-base font-bold leading-normal tracking-[0.015em] transition-all focus:outline-none focus:ring-4";
+    const baseStyles = "flex items-center justify-center overflow-hidden rounded-full h-12 px-8 text-base font-bold leading-normal tracking-[0.015em] transition-all focus:outline-none focus:ring-4 truncate cursor-pointer";
 
     const variants = {
         primary: "bg-gradient-to-r from-primary to-primary/80 text-white hover:from-primary/90 hover:to-primary/70 focus:ring-primary/50",
@@ -25,7 +25,8 @@ export function Button({
             className={twMerge(baseStyles, variants[variant], glowClass, className)}
             {...props}
         >
-            <span className="truncate">{children}</span>
+            {/* <span className="truncate">{children}</span> */}
+            {children}
         </motion.button>
     );
 }

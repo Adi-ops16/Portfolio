@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { FaXTwitter } from 'react-icons/fa6';
 import { useState, useRef } from 'react';
-import emailjs from '@emailjs/browser';
 
 export function Contact() {
     const formRef = useRef(null);
@@ -16,18 +15,26 @@ export function Contact() {
         setIsSubmitting(true);
         setSubmitStatus('idle');
 
+        const formData = new FormData(formRef.current);
+        const data = {
+            user_name: formData.get('user_name'),
+            user_email: formData.get('user_email'),
+            subject: formData.get('subject'),
+            message: formData.get('message'),
+        };
+
         try {
-            const result = await emailjs.sendForm(
-                `${process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID}`,
-                `${process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID}`,
-                formRef.current,
-                `${process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY}`
-            );
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+            });
+
+            if (!res.ok) throw new Error('Failed to send');
 
             setSubmitStatus('success');
             formRef.current?.reset();
 
-            // Reset success message after 5 seconds
             setTimeout(() => setSubmitStatus('idle'), 5000);
         } catch (error) {
             console.error('Email send failed:', error);

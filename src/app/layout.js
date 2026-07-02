@@ -4,6 +4,7 @@ import "./globals.css";
 import { SmoothScroll } from "@/components/ui/SmoothScroll";
 import { SplashScreen } from "@/components/ui/SplashScreen";
 import { BackgroundEffect } from "@/components/ui/BackgroundEffect";
+import { Header } from "@/components/sections/Header";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -116,6 +117,7 @@ export default function RootLayout({ children }) {
         <SmoothScroll>
           <SplashScreen />
           <BackgroundEffect />
+          <Header />
           {children}
         </SmoothScroll>
       </body>

@@ -28,7 +28,7 @@ canvas.fixed {
 }
 
 /* Allow the browser to skip rendering offscreen sections */
-section {
+section:not(#projects) {
     content-visibility: auto;
     contain-intrinsic-size: auto 800px;
 }
@@ -82,4 +82,13 @@ section {
 .animate-gradient {
     animation: gradient 8s ease infinite;
     background-size: 200% 200%;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
 }
